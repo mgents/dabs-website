@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Section } from '@/components/ui/section';
-import { PageHero } from '@/components/ui/page-hero';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EventCard } from '@/components/events/event-card';
+import { EventsHero } from '@/components/events/events-hero';
 import { getUpcomingEvents, getPastEvents } from '@/lib/db/events';
 import { Calendar } from 'lucide-react';
 
@@ -20,7 +20,7 @@ export default async function EventsPage() {
 
   return (
     <>
-      <PageHero title="Events" image="/assets/migrated/hero/about-banner.png" />
+      <EventsHero upcomingEvents={upcomingEvents} />
       <Section>
         <Tabs defaultValue="upcoming" className="w-full">
         <TabsList className="mb-8">

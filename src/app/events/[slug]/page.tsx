@@ -56,12 +56,11 @@ export default async function EventPage({ params }: EventPageProps) {
             <p className="text-lg text-muted-foreground mb-8">{event.excerpt}</p>
           )}
 
-          {/* Event Content */}
-          {event.content_html && (
-            <div
-              className="prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: event.content_html }}
-            />
+          {/* Event Description */}
+          {event.description && (
+            <div className="prose prose-lg max-w-none">
+              <p>{event.description}</p>
+            </div>
           )}
         </div>
 

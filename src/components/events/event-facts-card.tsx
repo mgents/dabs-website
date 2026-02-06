@@ -38,9 +38,9 @@ export function EventFactsCard({ event }: EventFactsCardProps) {
               {event.location_address && (
                 <p className="text-sm text-muted-foreground">{event.location_address}</p>
               )}
-              {event.map_url && (
+              {event.location_url && (
                 <a
-                  href={event.map_url}
+                  href={event.location_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-primary hover:underline inline-flex items-center gap-1 mt-1"
@@ -54,18 +54,10 @@ export function EventFactsCard({ event }: EventFactsCardProps) {
 
         <Separator />
 
-        {event.registration_mode === 'url' && event.registration_url && (
+        {event.registration_url && (
           <Button asChild className="w-full">
             <a href={event.registration_url} target="_blank" rel="noopener noreferrer">
               Register <ExternalLink className="h-4 w-4 ml-2" />
-            </a>
-          </Button>
-        )}
-
-        {event.registration_mode === 'email' && event.registration_email && (
-          <Button asChild className="w-full">
-            <a href={`mailto:${event.registration_email}?subject=Registration: ${event.title}`}>
-              Register via Email
             </a>
           </Button>
         )}

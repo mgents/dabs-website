@@ -7,13 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { createEvent, updateEvent } from '@/lib/actions/events';
 import type { Event } from '@/types/database';
 
@@ -37,6 +30,7 @@ export function EventForm({ event }: EventFormProps) {
   const [title, setTitle] = useState(event?.title || '');
   const [slug, setSlug] = useState(event?.slug || '');
   const [isPublished, setIsPublished] = useState(event?.is_published || false);
+  const [isMembersOnly, setIsMembersOnly] = useState(event?.is_members_only || false);
 
   function handleTitleChange(value: string) {
     setTitle(value);
@@ -50,6 +44,7 @@ export function EventForm({ event }: EventFormProps) {
     setLoading(true);
 
     formData.set('is_published', isPublished ? 'true' : 'false');
+    formData.set('is_members_only', isMembersOnly ? 'true' : 'false');
 
     try {
       const result = event
@@ -129,15 +124,6 @@ export function EventForm({ event }: EventFormProps) {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="timezone">Timezone</Label>
-        <Input
-          id="timezone"
-          name="timezone"
-          defaultValue={event?.timezone || 'Asia/Singapore'}
-        />
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="location_name">Location Name</Label>
@@ -158,12 +144,12 @@ export function EventForm({ event }: EventFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="map_url">Map URL</Label>
+        <Label htmlFor="location_url">Map URL</Label>
         <Input
-          id="map_url"
-          name="map_url"
+          id="location_url"
+          name="location_url"
           type="url"
-          defaultValue={event?.map_url || ''}
+          defaultValue={event?.location_url || ''}
           placeholder="https://maps.google.com/..."
         />
       </div>
@@ -192,68 +178,69 @@ export function EventForm({ event }: EventFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="content_html">Content (HTML)</Label>
+        <Label htmlFor="description">Description</Label>
         <Textarea
-          id="content_html"
-          name="content_html"
-          defaultValue={event?.content_html || ''}
-          rows={10}
-          placeholder="<h2>About this event</h2><p>...</p>"
+          id="description"
+          name="description"
+          defaultValue={event?.description || ''}
+          rows={6}
+          placeholder="Full event description..."
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="registration_mode">Registration Mode</Label>
-        <Select name="registration_mode" defaultValue={event?.registration_mode || 'none'}>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="none">No Registration</SelectItem>
-            <SelectItem value="url">External URL</SelectItem>
-            <SelectItem value="email">Email</SelectItem>
-          </SelectContent>
-        </Select>
+        <Label htmlFor="registration_url">Registration URL</Label>
+        <Input
+          id="registration_url"
+          name="registration_url"
+          type="url"
+          defaultValue={event?.registration_url || ''}
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="registration_url">Registration URL</Label>
+          <Label htmlFor="member_price">Member Price (SGD)</Label>
           <Input
-            id="registration_url"
-            name="registration_url"
-            type="url"
-            defaultValue={event?.registration_url || ''}
+            id="member_price"
+            name="member_price"
+            type="number"
+            min="0"
+            step="0.01"
+            defaultValue={event?.member_price || 0}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="registration_email">Registration Email</Label>
+          <Label htmlFor="non_member_price">Non-Member Price (SGD)</Label>
           <Input
-            id="registration_email"
-            name="registration_email"
-            type="email"
-            defaultValue={event?.registration_email || ''}
+            id="non_member_price"
+            name="non_member_price"
+            type="number"
+            min="0"
+            step="0.01"
+            defaultValue={event?.non_member_price || ''}
+            placeholder="Leave empty if same as member price"
           />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="google_calendar_url">Google Calendar URL</Label>
-        <Input
-          id="google_calendar_url"
-          name="google_calendar_url"
-          type="url"
-          defaultValue={event?.google_calendar_url || ''}
-        />
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="is_published"
-          checked={isPublished}
-          onCheckedChange={(checked) => setIsPublished(checked === true)}
-        />
-        <Label htmlFor="is_published">Published</Label>
+      <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="is_published"
+            checked={isPublished}
+            onCheckedChange={(checked) => setIsPublished(checked === true)}
+          />
+          <Label htmlFor="is_published">Published</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="is_members_only"
+            checked={isMembersOnly}
+            onCheckedChange={(checked) => setIsMembersOnly(checked === true)}
+          />
+          <Label htmlFor="is_members_only">Members Only</Label>
+        </div>
       </div>
 
       <div className="flex gap-4">

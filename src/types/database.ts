@@ -1,4 +1,3 @@
-export type RegistrationMode = 'url' | 'email' | 'none';
 export type InquiryType = 'contact' | 'membership' | 'sponsorship';
 export type InquiryStatus = 'new' | 'in_progress' | 'closed';
 
@@ -8,17 +7,16 @@ export interface Event {
   slug: string;
   start_datetime: string;
   end_datetime: string | null;
-  timezone: string;
   location_name: string | null;
   location_address: string | null;
-  map_url: string | null;
+  location_url: string | null;
   featured_image_url: string | null;
   excerpt: string | null;
-  content_html: string | null;
-  registration_mode: RegistrationMode;
+  description: string | null;
   registration_url: string | null;
-  registration_email: string | null;
-  google_calendar_url: string | null;
+  is_members_only: boolean;
+  member_price: number;
+  non_member_price: number | null;
   is_published: boolean;
   created_at: string;
   updated_at: string;
@@ -62,16 +60,15 @@ export interface EventFormData {
   slug: string;
   start_datetime: string;
   end_datetime?: string;
-  timezone: string;
   location_name?: string;
   location_address?: string;
-  map_url?: string;
+  location_url?: string;
   featured_image_url?: string;
   excerpt: string;
-  content_html?: string;
-  registration_mode: RegistrationMode;
+  description?: string;
   registration_url?: string;
-  registration_email?: string;
-  google_calendar_url?: string;
+  is_members_only: boolean;
+  member_price: number;
+  non_member_price?: number;
   is_published: boolean;
 }

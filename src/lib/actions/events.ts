@@ -8,11 +8,13 @@ export async function createEvent(
   formData: FormData
 ): Promise<{ success: boolean; error?: string; id?: string }> {
   const raw = Object.fromEntries(formData.entries());
-  raw.is_published = formData.get('is_published') === 'true' ? 'true' : 'false';
 
   const parsed = {
     ...raw,
     is_published: raw.is_published === 'true',
+    is_members_only: raw.is_members_only === 'true',
+    member_price: Number(raw.member_price) || 0,
+    non_member_price: raw.non_member_price ? Number(raw.non_member_price) : undefined,
   };
 
   const result = eventSchema.safeParse(parsed);
@@ -25,21 +27,20 @@ export async function createEvent(
     title: result.data.title,
     slug: result.data.slug,
     start_datetime: result.data.start_datetime,
-    timezone: result.data.timezone,
     excerpt: result.data.excerpt,
-    registration_mode: result.data.registration_mode,
+    is_members_only: result.data.is_members_only,
+    member_price: result.data.member_price,
     is_published: result.data.is_published,
   };
 
   if (result.data.end_datetime) insertData.end_datetime = result.data.end_datetime;
   if (result.data.location_name) insertData.location_name = result.data.location_name;
   if (result.data.location_address) insertData.location_address = result.data.location_address;
-  if (result.data.map_url) insertData.map_url = result.data.map_url;
+  if (result.data.location_url) insertData.location_url = result.data.location_url;
   if (result.data.featured_image_url) insertData.featured_image_url = result.data.featured_image_url;
-  if (result.data.content_html) insertData.content_html = result.data.content_html;
+  if (result.data.description) insertData.description = result.data.description;
   if (result.data.registration_url) insertData.registration_url = result.data.registration_url;
-  if (result.data.registration_email) insertData.registration_email = result.data.registration_email;
-  if (result.data.google_calendar_url) insertData.google_calendar_url = result.data.google_calendar_url;
+  if (result.data.non_member_price != null) insertData.non_member_price = result.data.non_member_price;
 
   const { data, error } = await supabase
     .from('events')
@@ -65,6 +66,9 @@ export async function updateEvent(
   const parsed = {
     ...raw,
     is_published: raw.is_published === 'true',
+    is_members_only: raw.is_members_only === 'true',
+    member_price: Number(raw.member_price) || 0,
+    non_member_price: raw.non_member_price ? Number(raw.non_member_price) : undefined,
   };
 
   const result = eventSchema.safeParse(parsed);
@@ -80,17 +84,16 @@ export async function updateEvent(
       slug: result.data.slug,
       start_datetime: result.data.start_datetime,
       end_datetime: result.data.end_datetime || null,
-      timezone: result.data.timezone,
       location_name: result.data.location_name || null,
       location_address: result.data.location_address || null,
-      map_url: result.data.map_url || null,
+      location_url: result.data.location_url || null,
       featured_image_url: result.data.featured_image_url || null,
       excerpt: result.data.excerpt,
-      content_html: result.data.content_html || null,
-      registration_mode: result.data.registration_mode,
+      description: result.data.description || null,
       registration_url: result.data.registration_url || null,
-      registration_email: result.data.registration_email || null,
-      google_calendar_url: result.data.google_calendar_url || null,
+      is_members_only: result.data.is_members_only,
+      member_price: result.data.member_price,
+      non_member_price: result.data.non_member_price ?? null,
       is_published: result.data.is_published,
     })
     .eq('id', id);

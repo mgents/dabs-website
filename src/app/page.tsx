@@ -132,14 +132,23 @@ export default async function HomePage() {
         {/* Main Partners */}
         <div className="mb-8">
           <p className="text-lg font-semibold text-center text-muted-foreground mb-4">DABS Main Partners</p>
-          <div className="rounded-xl overflow-hidden border bg-white p-6 max-w-3xl mx-auto">
-            <div className="relative w-full aspect-[4/1]">
+          <div className="flex items-center justify-center gap-12 md:gap-20 max-w-3xl mx-auto rounded-xl border bg-white p-8">
+            <div className="relative h-14 md:h-20 w-40 md:w-56">
               <Image
-                src="/assets/migrated/sponsors/main-partners-composite.png"
-                alt="DABS Main Partners"
+                src="https://img.hubbis.com/optimiser/img/company/cropped/c9cdb79b198ba73c00a7f2c066fb6808c58c76de.png"
+                alt="Saxo Markets"
                 fill
                 className="object-contain"
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="224px"
+              />
+            </div>
+            <div className="relative h-14 md:h-20 w-40 md:w-56">
+              <Image
+                src="https://static.wikia.nocookie.net/logopedia/images/3/33/Carlsberg_print.svg/revision/latest?cb=20220417210157"
+                alt="Carlsberg"
+                fill
+                className="object-contain"
+                sizes="224px"
               />
             </div>
           </div>

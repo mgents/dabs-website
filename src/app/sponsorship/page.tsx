@@ -134,12 +134,11 @@ export default function SponsorshipPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Sponsor Tier */}
-          <Card className="border-2 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-muted-foreground/30" />
+          <Card className="border relative overflow-hidden">
             <CardContent className="p-8">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
-                  <Star className="h-6 w-6 text-muted-foreground" />
+                  <Star className="h-6 w-6 text-foreground/70" />
                 </div>
                 <h3 className="text-2xl font-bold">Sponsor</h3>
               </div>
@@ -179,20 +178,19 @@ export default function SponsorshipPage() {
           </Card>
 
           {/* Main Partner Tier */}
-          <Card className="border-2 border-primary relative overflow-hidden shadow-lg">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+          <Card className="border relative overflow-hidden">
             <CardContent className="p-8">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Crown className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                  <Crown className="h-6 w-6 text-foreground/70" />
                 </div>
                 <h3 className="text-2xl font-bold">Main Partner</h3>
               </div>
               <p className="text-muted-foreground mb-6">
                 The premium partnership for companies who want maximum visibility, exclusive access, and a leading role in the community.
               </p>
-              <ul className="space-y-3 mb-4">
-                <li className="flex items-start gap-2 text-sm font-medium">
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   Everything in Sponsor, plus:
                 </li>
@@ -221,7 +219,7 @@ export default function SponsorshipPage() {
                   Large logo in all DABS email communications
                 </li>
               </ul>
-              <Button asChild className="w-full">
+              <Button asChild variant="outline" className="w-full">
                 <Link href="/sponsorship/apply">Become a Main Partner</Link>
               </Button>
             </CardContent>
@@ -241,7 +239,7 @@ export default function SponsorshipPage() {
                       <Star className="h-4 w-4" /> Sponsor
                     </div>
                   </th>
-                  <th className="text-center py-3 px-4 font-semibold w-1/4 text-primary">
+                  <th className="text-center py-3 px-4 font-semibold w-1/4">
                     <div className="flex items-center justify-center gap-1.5">
                       <Crown className="h-4 w-4" /> Main Partner
                     </div>
@@ -279,7 +277,7 @@ export default function SponsorshipPage() {
                           ) : feature.mainPartner === false ? (
                             <span className="text-muted-foreground/40">&mdash;</span>
                           ) : (
-                            <span className="text-xs font-medium text-primary">{feature.mainPartner}</span>
+                            <span className="text-xs font-medium">{feature.mainPartner}</span>
                           )}
                         </td>
                       </tr>

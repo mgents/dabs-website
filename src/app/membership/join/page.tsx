@@ -36,7 +36,7 @@ export default function JoinPage() {
         <h2 className="text-2xl font-semibold mb-6">Membership Tiers</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Corporate */}
-          <Card className="border-2">
+          <Card className="border">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Corporate Membership</CardTitle>
@@ -44,9 +44,12 @@ export default function JoinPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-3">
                 Covers all employees and their partners. Open to all companies, with an annual fee of
                 SGD 1500.
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                <strong>Eligibility:</strong> Any registered company
               </p>
               <Button asChild variant="link" className="p-0 h-auto">
                 <Link href="/membership/corporate" className="inline-flex items-center gap-1">
@@ -57,20 +60,20 @@ export default function JoinPage() {
           </Card>
 
           {/* Start-up */}
-          <Card className="border-2 border-primary/30">
+          <Card className="border">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Start-up Membership</CardTitle>
-                <Badge>SGD 380/yr</Badge>
+                <Badge variant="secondary">SGD 380/yr</Badge>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-3">
                 For early-stage companies building and growing their business. Designed for small teams
                 who want visibility, connections, and access to the Danish-Singaporean business and
                 innovation network.
               </p>
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-sm text-muted-foreground mb-4">
                 <strong>Eligibility:</strong> Companies with up to 5 employees
               </p>
               <Button asChild variant="link" className="p-0 h-auto">
@@ -82,7 +85,7 @@ export default function JoinPage() {
           </Card>
 
           {/* Individual */}
-          <Card className="border-2">
+          <Card className="border">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Individual Membership</CardTitle>
@@ -90,9 +93,12 @@ export default function JoinPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-3">
                 Covers one member and their spouse, open to all nationalities, with an annual fee of
                 SGD 150.
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                <strong>Eligibility:</strong> Any individual of any nationality
               </p>
               <Button asChild variant="link" className="p-0 h-auto">
                 <Link href="/membership/individual" className="inline-flex items-center gap-1">
@@ -103,17 +109,20 @@ export default function JoinPage() {
           </Card>
 
           {/* Student */}
-          <Card className="border-2">
+          <Card className="border">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Student Membership</CardTitle>
-                <Badge variant="success">Free</Badge>
+                <Badge variant="secondary">Free</Badge>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-3">
                 For Danish nationals enrolled at an educational institution in Singapore. Covers one
                 student and is free of charge.
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                <strong>Eligibility:</strong> Danish nationals enrolled at a Singapore institution
               </p>
               <Button asChild variant="link" className="p-0 h-auto">
                 <Link href="/membership/student" className="inline-flex items-center gap-1">
