@@ -59,7 +59,9 @@ export default async function EventPage({ params }: EventPageProps) {
           {/* Event Description */}
           {event.description && (
             <div className="prose prose-lg max-w-none">
-              <p>{event.description}</p>
+              {event.description.split('\n\n').map((paragraph, i) => (
+                <p key={i} className="whitespace-pre-line">{paragraph}</p>
+              ))}
             </div>
           )}
         </div>
