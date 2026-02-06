@@ -10,6 +10,7 @@ export interface Event {
   location_address: string | null;
   location_url: string | null;
   featured_image_url: string | null;
+  image_urls: string[];
   excerpt: string | null;
   description: string | null;
   registration_url: string | null;
@@ -82,6 +83,7 @@ export interface EventFormData {
   location_address?: string;
   location_url?: string;
   featured_image_url?: string;
+  image_urls?: string[];
   excerpt: string;
   description?: string;
   registration_url?: string;

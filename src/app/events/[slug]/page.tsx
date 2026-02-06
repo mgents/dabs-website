@@ -32,6 +32,32 @@ function isUpcoming(startDatetime: string): boolean {
   return new Date(startDatetime) > new Date();
 }
 
+/**
+ * Parse event description into structured sections.
+ * Splits on double newlines and groups content blocks.
+ */
+function parseDescription(description: string): { intro: string[]; details: string[] } {
+  const paragraphs = description.split('\n\n').map(p => p.trim()).filter(Boolean);
+
+  // Find the split point — look for headings like "THE DETAILS", "TICKETS", etc.
+  const detailKeywords = ['THE DETAILS', 'TICKETS', 'PRICING', 'REGISTRATION', 'HOW TO REGISTER', 'Early Bird'];
+  const splitIndex = paragraphs.findIndex(p =>
+    detailKeywords.some(keyword => p.toUpperCase().includes(keyword.toUpperCase()))
+  );
+
+  if (splitIndex > 0) {
+    return {
+      intro: paragraphs.slice(0, splitIndex),
+      details: paragraphs.slice(splitIndex),
+    };
+  }
+
+  return {
+    intro: paragraphs,
+    details: [],
+  };
+}
+
 export default async function EventPage({ params }: EventPageProps) {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
@@ -41,22 +67,34 @@ export default async function EventPage({ params }: EventPageProps) {
   }
 
   const upcoming = isUpcoming(event.start_datetime);
+  const allImages = [
+    ...(event.featured_image_url ? [getEventImage(event.featured_image_url)] : []),
+    ...(event.image_urls || []),
+  ];
+  const description = event.description ? parseDescription(event.description) : null;
 
   return (
     <Section>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          {/* Hero Image */}
-          <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-8">
-            <Image
-              src={getEventImage(event.featured_image_url)}
-              alt={event.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 66vw"
-              priority
-            />
-          </div>
+          {/* Event Images — original aspect ratio, no cropping */}
+          {allImages.length > 0 && (
+            <div className="space-y-4 mb-8">
+              {allImages.map((imageUrl, index) => (
+                <div key={index} className="relative w-full rounded-xl overflow-hidden">
+                  <Image
+                    src={imageUrl}
+                    alt={index === 0 ? event.title : `${event.title} — image ${index + 1}`}
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto rounded-xl"
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    priority={index === 0}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           <h1 className="text-3xl md:text-4xl font-bold mb-6">{event.title}</h1>
 
@@ -64,12 +102,42 @@ export default async function EventPage({ params }: EventPageProps) {
             <p className="text-lg text-muted-foreground mb-8">{event.excerpt}</p>
           )}
 
-          {/* Event Description */}
-          {event.description && (
-            <div className="prose prose-lg max-w-none">
-              {event.description.split('\n\n').map((paragraph, i) => (
-                <p key={i} className="whitespace-pre-line">{paragraph}</p>
-              ))}
+          {/* Event Description — structured layout */}
+          {description && (
+            <div className="space-y-8">
+              {/* Intro / invitation text */}
+              {description.intro.length > 0 && (
+                <div className="prose prose-lg max-w-none">
+                  {description.intro.map((paragraph, i) => (
+                    <p key={i} className="whitespace-pre-line">{paragraph}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* Details section — ticket info, logistics */}
+              {description.details.length > 0 && (
+                <>
+                  <Separator />
+                  <div className="bg-muted/50 rounded-xl p-6 md:p-8 space-y-4">
+                    {description.details.map((paragraph, i) => {
+                      // Check if this paragraph is a heading-like line
+                      const isHeading = paragraph === paragraph.toUpperCase() && paragraph.length < 40;
+                      if (isHeading) {
+                        return (
+                          <h3 key={i} className="text-lg font-bold text-primary tracking-wide">
+                            {paragraph}
+                          </h3>
+                        );
+                      }
+                      return (
+                        <p key={i} className="whitespace-pre-line text-sm md:text-base leading-relaxed">
+                          {paragraph}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
             </div>
           )}
 

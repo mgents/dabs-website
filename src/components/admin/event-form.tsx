@@ -166,6 +166,17 @@ export function EventForm({ event }: EventFormProps) {
       </div>
 
       <div className="space-y-2">
+        <Label htmlFor="image_urls">Additional Image URLs (one per line)</Label>
+        <Textarea
+          id="image_urls"
+          name="image_urls"
+          defaultValue={(event?.image_urls || []).join('\n')}
+          rows={3}
+          placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="excerpt">Excerpt * (max 500 chars)</Label>
         <Textarea
           id="excerpt"

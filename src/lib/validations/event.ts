@@ -9,6 +9,7 @@ export const eventSchema = z.object({
   location_address: z.string().optional(),
   location_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
   featured_image_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  image_urls: z.array(z.string().url()).optional().default([]),
   excerpt: z.string().max(500, 'Excerpt must be 500 characters or less'),
   description: z.string().optional(),
   registration_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),

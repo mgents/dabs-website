@@ -9,12 +9,18 @@ export async function createEvent(
 ): Promise<{ success: boolean; error?: string; id?: string }> {
   const raw = Object.fromEntries(formData.entries());
 
+  const imageUrlsRaw = raw.image_urls as string | undefined;
+  const imageUrls = imageUrlsRaw
+    ? imageUrlsRaw.split('\n').map(u => u.trim()).filter(Boolean)
+    : [];
+
   const parsed = {
     ...raw,
     is_published: raw.is_published === 'true',
     is_members_only: raw.is_members_only === 'true',
     member_price: Number(raw.member_price) || 0,
     non_member_price: raw.non_member_price ? Number(raw.non_member_price) : undefined,
+    image_urls: imageUrls,
   };
 
   const result = eventSchema.safeParse(parsed);
@@ -33,6 +39,7 @@ export async function createEvent(
     is_published: result.data.is_published,
   };
 
+  insertData.image_urls = result.data.image_urls || [];
   if (result.data.end_datetime) insertData.end_datetime = result.data.end_datetime;
   if (result.data.location_name) insertData.location_name = result.data.location_name;
   if (result.data.location_address) insertData.location_address = result.data.location_address;
@@ -63,12 +70,18 @@ export async function updateEvent(
 ): Promise<{ success: boolean; error?: string }> {
   const raw = Object.fromEntries(formData.entries());
 
+  const updateImageUrlsRaw = raw.image_urls as string | undefined;
+  const updateImageUrls = updateImageUrlsRaw
+    ? updateImageUrlsRaw.split('\n').map(u => u.trim()).filter(Boolean)
+    : [];
+
   const parsed = {
     ...raw,
     is_published: raw.is_published === 'true',
     is_members_only: raw.is_members_only === 'true',
     member_price: Number(raw.member_price) || 0,
     non_member_price: raw.non_member_price ? Number(raw.non_member_price) : undefined,
+    image_urls: updateImageUrls,
   };
 
   const result = eventSchema.safeParse(parsed);
@@ -88,6 +101,7 @@ export async function updateEvent(
       location_address: result.data.location_address || null,
       location_url: result.data.location_url || null,
       featured_image_url: result.data.featured_image_url || null,
+      image_urls: result.data.image_urls || [],
       excerpt: result.data.excerpt,
       description: result.data.description || null,
       registration_url: result.data.registration_url || null,
