@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Section } from '@/components/ui/section';
+import { Separator } from '@/components/ui/separator';
 import { EventFactsCard } from '@/components/events/event-facts-card';
+import { EventRegistrationForm } from '@/components/forms/event-registration-form';
 import { getEventBySlug } from '@/lib/db/events';
 import { getEventImage } from '@/lib/assets';
 
@@ -26,6 +28,10 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
   };
 }
 
+function isUpcoming(startDatetime: string): boolean {
+  return new Date(startDatetime) > new Date();
+}
+
 export default async function EventPage({ params }: EventPageProps) {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
@@ -33,6 +39,8 @@ export default async function EventPage({ params }: EventPageProps) {
   if (!event) {
     notFound();
   }
+
+  const upcoming = isUpcoming(event.start_datetime);
 
   return (
     <Section>
@@ -63,6 +71,20 @@ export default async function EventPage({ params }: EventPageProps) {
                 <p key={i} className="whitespace-pre-line">{paragraph}</p>
               ))}
             </div>
+          )}
+
+          {/* Registration Form — only for upcoming events */}
+          {upcoming && (
+            <>
+              <Separator className="my-10" />
+              <div id="register">
+                <h2 className="text-2xl font-bold mb-2">Register for this Event</h2>
+                <p className="text-muted-foreground mb-6">
+                  Fill out the form below to secure your spot. We&apos;ll send you a confirmation email.
+                </p>
+                <EventRegistrationForm eventTitle={event.title} eventSlug={event.slug} />
+              </div>
+            </>
           )}
         </div>
 

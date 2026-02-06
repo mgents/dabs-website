@@ -1,5 +1,4 @@
 export type InquiryType = 'contact' | 'membership' | 'sponsorship';
-export type InquiryStatus = 'new' | 'in_progress' | 'closed';
 
 export interface Event {
   id: string;
@@ -25,9 +24,28 @@ export interface Event {
 export interface Inquiry {
   id: string;
   type: InquiryType;
-  payload_json: Record<string, unknown>;
-  status: InquiryStatus;
+  name: string;
+  email: string;
+  company: string | null;
+  subject: string | null;
+  message: string | null;
+  membership_type: string | null;
+  sponsorship_tier: string | null;
+  data: Record<string, unknown> | null;
+  is_read: boolean;
   created_at: string;
+}
+
+export interface EventRegistrationPayload {
+  name: string;
+  email: string;
+  company?: string;
+  position?: string;
+  phone?: string;
+  membershipType: string;
+  eventTitle: string;
+  eventSlug: string;
+  message?: string;
 }
 
 export interface ContactPayload {

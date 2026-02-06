@@ -52,11 +52,11 @@ export function EventFactsCard({ event }: EventFactsCardProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Registration CTA — prominent at top for upcoming events */}
-        {!past && event.registration_url && (
+        {/* Registration CTA — scrolls to inline form for upcoming events */}
+        {!past && (
           <>
             <Button asChild size="lg" className="w-full text-base">
-              <a href={event.registration_url} target="_blank" rel="noopener noreferrer">
+              <a href="#register">
                 <Ticket className="h-4 w-4 mr-2" />
                 Register Now
               </a>

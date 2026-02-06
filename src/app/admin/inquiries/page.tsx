@@ -24,42 +24,39 @@ export default async function AdminInquiriesPage() {
               </tr>
             </thead>
             <tbody className="divide-y">
-              {inquiries.map((inquiry) => {
-                const payload = inquiry.payload_json as Record<string, string>;
-                return (
-                  <tr key={inquiry.id} className="hover:bg-muted/30">
-                    <td className="px-4 py-3">
-                      <Badge variant={
-                        inquiry.type === 'contact' ? 'secondary' :
-                        inquiry.type === 'membership' ? 'default' : 'outline'
-                      }>
-                        {inquiry.type}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {format(new Date(inquiry.created_at), 'MMM d, yyyy h:mm a')}
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge variant={
-                        inquiry.status === 'new' ? 'warning' :
-                        inquiry.status === 'in_progress' ? 'secondary' : 'success'
-                      }>
-                        {inquiry.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-sm">
-                      <div className="max-w-md">
-                        {payload.name && <span className="font-medium">{payload.name}</span>}
-                        {payload.email && <span className="text-muted-foreground ml-2">{payload.email}</span>}
-                        {payload.companyName && <span className="font-medium">{payload.companyName}</span>}
-                        {payload.message && (
-                          <p className="text-muted-foreground truncate mt-1">{payload.message}</p>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+              {inquiries.map((inquiry) => (
+                <tr key={inquiry.id} className="hover:bg-muted/30">
+                  <td className="px-4 py-3">
+                    <Badge variant={
+                      inquiry.type === 'contact' ? 'secondary' :
+                      inquiry.type === 'membership' ? 'default' : 'outline'
+                    }>
+                      {inquiry.type}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">
+                    {format(new Date(inquiry.created_at), 'MMM d, yyyy h:mm a')}
+                  </td>
+                  <td className="px-4 py-3">
+                    <Badge variant={inquiry.is_read ? 'success' : 'warning'}>
+                      {inquiry.is_read ? 'Read' : 'New'}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    <div className="max-w-md">
+                      {inquiry.name && <span className="font-medium">{inquiry.name}</span>}
+                      {inquiry.email && <span className="text-muted-foreground ml-2">{inquiry.email}</span>}
+                      {inquiry.company && <span className="text-muted-foreground ml-2">({inquiry.company})</span>}
+                      {inquiry.subject && (
+                        <p className="text-foreground text-xs mt-1">{inquiry.subject}</p>
+                      )}
+                      {inquiry.message && (
+                        <p className="text-muted-foreground truncate mt-1">{inquiry.message}</p>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
