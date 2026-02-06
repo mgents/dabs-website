@@ -130,25 +130,25 @@ export default async function HomePage() {
         </div>
 
         {/* Main Partners */}
-        <div className="mb-8">
-          <p className="text-lg font-semibold text-center text-muted-foreground mb-4">DABS Main Partners</p>
-          <div className="flex items-center justify-center gap-12 md:gap-20 max-w-3xl mx-auto rounded-xl border bg-white p-8">
-            <div className="relative h-14 md:h-20 w-40 md:w-56">
+        <div className="mb-10">
+          <p className="text-lg font-semibold text-center text-muted-foreground mb-6">DABS Main Partners</p>
+          <div className="flex items-center justify-center gap-16 md:gap-24 max-w-4xl mx-auto rounded-xl border bg-white p-10 md:p-12">
+            <div className="relative h-20 md:h-28 w-48 md:w-72">
               <Image
-                src="https://img.hubbis.com/optimiser/img/company/cropped/c9cdb79b198ba73c00a7f2c066fb6808c58c76de.png"
+                src="/assets/migrated/sponsors/saxo-logo.png"
                 alt="Saxo Markets"
                 fill
                 className="object-contain"
-                sizes="224px"
+                sizes="288px"
               />
             </div>
-            <div className="relative h-14 md:h-20 w-40 md:w-56">
+            <div className="relative h-20 md:h-28 w-48 md:w-72">
               <Image
-                src="https://static.wikia.nocookie.net/logopedia/images/3/33/Carlsberg_print.svg/revision/latest?cb=20220417210157"
+                src="/assets/migrated/sponsors/carlsberg-logo.png"
                 alt="Carlsberg"
                 fill
                 className="object-contain"
-                sizes="224px"
+                sizes="288px"
               />
             </div>
           </div>
@@ -156,15 +156,15 @@ export default async function HomePage() {
 
         {/* Sponsors */}
         <div className="mb-8">
-          <p className="text-lg font-semibold text-center text-muted-foreground mb-4">DABS Sponsors</p>
-          <div className="rounded-xl overflow-hidden border bg-white p-6 max-w-3xl mx-auto">
-            <div className="relative w-full aspect-[3/1]">
+          <p className="text-lg font-semibold text-center text-muted-foreground mb-6">DABS Sponsors</p>
+          <div className="rounded-xl overflow-hidden border bg-white p-8 md:p-10 max-w-4xl mx-auto">
+            <div className="relative w-full aspect-[2.5/1]">
               <Image
                 src="/assets/migrated/sponsors/sponsors-composite.jpg"
                 alt="DABS Sponsors"
                 fill
                 className="object-contain"
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="(max-width: 768px) 100vw, 896px"
               />
             </div>
           </div>
