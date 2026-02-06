@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:images.squarespace-cdn.com)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(node -e:*)",
+      "Bash(timeout:*)",
+      "Bash(ping:*)",
+      "Bash(findstr:*)",
+      "Bash(python:*)",
+      "Bash(dir:*)",
+      "WebFetch(domain:www.dabs-singapore.com)",
+      "WebFetch(domain:unsplash.com)",
+      "Bash(git -C \"C:/Code/dabs-resources/dabsweb\" status)",
+      "Bash(git -C \"C:/Code/dabs-resources/dabsweb\" init)",
+      "Bash(git -C \"C:/Code/dabs-resources/dabsweb\" add -A)",
+      "Bash(git -C \"C:/Code/dabs-resources/dabsweb\" status --short)",
+      "Bash(echo:*)",
+      "Bash(printf:*)"
+    ]
+  }
+}
